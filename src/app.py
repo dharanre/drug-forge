@@ -1,59 +1,36 @@
-from flask import Flask, request, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
-import pickle
 import numpy as np
-from rdkit import Chem
-from rdkit.Chem import AllChem
-import os
+import pickle
 
+# Initialize Flask app
 app = Flask(__name__)
-CORS(app)  # Enable CORS for frontend communication
+CORS(app)
 
-# Load the trained model
+# Load the model
 try:
-    model_path = os.path.join(os.path.dirname(__file__), 'solubility_model.pkl')
-    with open(model_path, 'rb') as f:
+    with open('model.pkl', 'rb') as f:
         model = pickle.load(f)
-except FileNotFoundError:
-    raise Exception(f"Model file not found at {model_path}. Check the path and try again.")
+except Exception as e:
+    model = None
+    print(f"Error loading model: {e}")
 
-# Function to featurize SMILES string
-def featurize_smiles(smiles, radius=2, length=1024):
-    try:
-        mol = Chem.MolFromSmiles(smiles)
-        if mol is None:
-            return None
-        fingerprint = AllChem.GetMorganFingerprintAsBitVect(mol, radius, nBits=length)
-        return np.array(fingerprint).reshape(1, -1)
-    except Exception as e:
-        print(f"Error in featurizing SMILES: {e}")
-        return None
-
-@app.route('/', methods=['GET'])
+@app.route('/')
 def home():
-    return jsonify({'message': 'Welcome to the Solubility Prediction API! Use the /predict endpoint to make predictions.'})
+    return "DrugForge API is up and running on Render!"
 
 @app.route('/predict', methods=['POST'])
 def predict():
+    if not model:
+        return jsonify({"error": "Model not loaded properly"}), 500
+    
     try:
         data = request.get_json()
-        if not data or 'smiles' not in data:
-            return jsonify({'error': 'Missing "smiles" in request body'}), 400
-        
-        smiles = data.get('smiles')
-
-        # Featurize the input SMILES string
-        features = featurize_smiles(smiles)
-        if features is None:
-            return jsonify({'error': 'Invalid SMILES string'}), 400
-
-        # Predict using the loaded model
+        features = np.array(data['features']).reshape(1, -1)  # Reshape for sklearn
         prediction = model.predict(features)
-
-        return jsonify({'prediction': prediction.tolist()})
+        return jsonify({"prediction": prediction.tolist()})
     except Exception as e:
-        print(f"Error in /predict endpoint: {e}")
-        return jsonify({'error': 'An internal error occurred'}), 500
+        return jsonify({"error": str(e)}), 400
 
 if __name__ == '__main__':
     app.run(debug=True)
