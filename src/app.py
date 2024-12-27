@@ -1,37 +1,59 @@
-from flask import Flask, jsonify, request
+from flask import Flask, request, jsonify
 from flask_cors import CORS
-import numpy as np
 import pickle
-from sklearn.tree import DecisionTreeRegressor
+import numpy as np
+from rdkit import Chem
+from rdkit.Chem import AllChem
+import os
 
-# Initialize Flask app
 app = Flask(__name__)
-CORS(app)
+CORS(app)  # Enable CORS for frontend communication
 
-# Load the model
+# Load the trained model
 try:
-    with open('solubility_model.pkl', 'rb') as f:
+    model_path = os.path.join(os.getcwd(), 'solubility_model.pkl')  # Relative path
+    with open(model_path, 'rb') as f:
         model = pickle.load(f)
-except Exception as e:
-    model = None
-    print(f"Error loading model: {e}")
+except FileNotFoundError:
+    raise Exception(f"Model file not found at {model_path}. Check the path and try again.")
 
-@app.route('/')
+# Function to featurize SMILES string
+def featurize_smiles(smiles, radius=2, length=1024):
+    try:
+        mol = Chem.MolFromSmiles(smiles)
+        if mol is None:
+            return None
+        fingerprint = AllChem.GetMorganFingerprintAsBitVect(mol, radius, nBits=length)
+        return np.array(fingerprint).reshape(1, -1)
+    except Exception as e:
+        print(f"Error in featurizing SMILES: {e}")
+        return None
+
+@app.route('/', methods=['GET'])
 def home():
-    return "DrugForge API is up and running!"
+    return jsonify({'message': 'Welcome to the Solubility Prediction API! Use the /predict endpoint to make predictions.'})
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    if not model:
-        return jsonify({"error": "Model not loaded properly"}), 500
-    
     try:
         data = request.get_json()
-        features = np.array(data['features']).reshape(1, -1)  # Reshape for sklearn
+        if not data or 'smiles' not in data:
+            return jsonify({'error': 'Missing "smiles" in request body'}), 400
+        
+        smiles = data.get('smiles')
+
+        # Featurize the input SMILES string
+        features = featurize_smiles(smiles)
+        if features is None:
+            return jsonify({'error': 'Invalid SMILES string'}), 400
+
+        # Predict using the loaded model
         prediction = model.predict(features)
-        return jsonify({"prediction": prediction.tolist()})
+
+        return jsonify({'prediction': prediction.tolist()})
     except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        print(f"Error in /predict endpoint: {e}")
+        return jsonify({'error': 'An internal error occurred'}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
