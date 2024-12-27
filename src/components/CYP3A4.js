@@ -7,7 +7,7 @@ const containerStyle = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    padding: "20px",
+    padding: "20px", 
 };
 
 const cardStyle = {
@@ -132,7 +132,7 @@ const CYP3A4Predictor = () => {
         setShowResult(false);
 
         try {
-            const response = await fetch("http://localhost:5001/predict", {
+            const response = await fetch("https://drug-forge.onrender.com/predict", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

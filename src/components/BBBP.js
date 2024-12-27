@@ -8,7 +8,7 @@ const containerStyle = {
   justifyContent: "center",
   alignItems: "center",
   padding: "20px",
-};
+}; 
 
 const cardStyle = {
   backgroundColor: "#FFFFFF",
@@ -137,7 +137,7 @@ const BBBPPredictor = () => {
     setShowResult(false);
   
     try {
-      const response = await fetch("http://localhost:5001/predict", {
+      const response = await fetch("https://drug-forge.onrender.com/predict", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

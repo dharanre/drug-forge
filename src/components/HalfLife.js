@@ -12,7 +12,7 @@ const styles = {
   },
   heading: {
     color: '#2c3e50',
-    marginBottom: '1.5rem',
+    marginBottom: '1.5rem', 
     fontSize: '2.5rem',
     textAlign: 'center',
   },
@@ -128,7 +128,7 @@ const HalfLife = () => {
     }
     setError("");
     setIsLoading(true);
-    const url = "http://localhost:5001/predict";
+    const url = "https://drug-forge.onrender.com/predict";
     const jsonData = JSON.stringify(formData);
 
     fetch(url, {
