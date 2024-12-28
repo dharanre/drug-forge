@@ -1,4 +1,5 @@
-Flask
-Flask-Cors
-numpy
-rdkit-pypi
+numpy<2.0
+rdkit
+scikit-learn
+flask
+flask_cors
