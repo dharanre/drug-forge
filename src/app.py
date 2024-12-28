@@ -4,14 +4,13 @@ import pickle
 import numpy as np
 from rdkit import Chem
 from rdkit.Chem import AllChem
-import os
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for frontend communication
 
 # Load the trained model
 try:
-    model_path = os.path.join(os.getcwd(), 'solubility_model.pkl')  # Relative path
+    model_path = 'solubility_model.pkl'
     with open(model_path, 'rb') as f:
         model = pickle.load(f)
 except FileNotFoundError:
@@ -56,4 +55,4 @@ def predict():
         return jsonify({'error': 'An internal error occurred'}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5001)
