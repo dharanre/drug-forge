@@ -1,86 +1,101 @@
 # DrugForge: AI-Driven Drug Discovery Platform
 
-DrugForge is an AI-powered platform designed to revolutionize drug discovery by leveraging machine learning models and computational simulations. The platform accelerates the identification of potential drug candidates, predicting key properties and ensuring safety, efficacy, and rapid development.
+## Overview
+DrugForge is an AI-powered platform designed to revolutionize the drug discovery process. By leveraging advanced machine learning algorithms and computational simulations, DrugForge accelerates the identification of potential drug candidates, predicts key properties, and ensures safety and efficacy in development.
 
-## Table of Contents:
+---
 
-Features
+## Features
+- **AI-Powered Predictions**: Analyze molecular structures for toxicity, stability, and efficacy.
+- **Simile-Based Input**: Easy-to-use format for molecular representation.
+- **Model Diversity**: Incorporates multiple machine learning models, including Random Forest and XGBoost.
+- **Core Features**: Predict properties like ACE2 binding, BBB permeability, COX-2 inhibition, CYP3A4 metabolism, and half-life.
 
-Installation
+---
 
-Usage
+## How It Works
+1. **Input**: Users provide molecular data using Simplified Molecular Input Line Entry System (SMILES) strings.
+2. **Processing**: Machine learning models analyze the data to predict key molecular properties.
+3. **Output**: Provides detailed predictions, including molecular interactions and pharmacokinetics, aiding in drug candidate prioritization.
 
-Contributing
+---
 
-License
+## Why DrugForge?
+- **Efficiency**: Reduces drug discovery timelines significantly.
+- **Cost-Effectiveness**: Lowers R&D costs by minimizing failed experiments.
+- **Scalability**: Integrates seamlessly into existing pharmaceutical pipelines.
 
-### Features;
+---
 
+## Methodology
+- **Machine Learning Models**: Random Forest, XGBoost, and others tailored for property prediction.
+- **Data Processing**: Uses cheminformatics tools for feature extraction from SMILES strings.
+- **Platform Design**: Built with scalability and user-friendliness in mind.
 
-1]CYP P450 3A4 Inhibition Prediction: Evaluates drug-drug interaction risks by predicting how compounds affect the CYP3A4 enzyme.
+---
 
-2]Half-Life Prediction: Predicts the excretion rate of a compound, informing dosing regimens.
+## Tools and Technologies
+- **Programming Languages**: Python
+- **Libraries**: scikit-learn, RDKit, NumPy, Pandas
+- **Platform**: Intel OneAPI for optimized performance
+- **Database**: Secure, scalable storage for molecular datasets
 
-3]hERG Toxicity Prediction: Screens compounds for potential cardiotoxicity by predicting their interaction with hERG potassium ion channels.
+---
 
-4]Solubility Prediction: Determines the solubility of compounds, which is crucial for bioavailability.
+## Benefits
+- Accelerates hit identification and lead optimization.
+- Provides user-friendly molecular analysis for chemists and data scientists.
+- Enhances decision-making in the early stages of drug discovery.
 
-5]Blood-Brain Barrier (BBB) Permeability Prediction: Assesses whether a compound can cross the BBB, critical for drugs targeting the central nervous system.
+---
 
-6]Target Activity Prediction: Provides insights into how compounds interact with biological targets like enzymes or receptors.
+## Challenges Faced
+- **Data Preprocessing**: Addressed with cheminformatics tools like RDKit.
+- **Scalability**: Leveraged Intel OneAPI for efficient performance.
+- **Model Validation**: Ensured accuracy through rigorous testing.
 
-7]Molecular Docking: Simulates drug-target interactions, predicting binding affinity and optimizing molecular structures.
+---
 
-8]Polypharmacology Prediction: Identifies multi-target interactions and repurposing potential of drug candidates.
+## Future Improvements
+- Integration with additional machine learning models for enhanced predictions.
+- Development of a fully interactive GUI for non-technical users.
+- Expansion of molecular datasets for broader applicability.
 
+---
 
+## Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/dharanre/drug-forge.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd drug-forge
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### Installation;
+---
 
-Clone the Repository:
+## Usage
+1. Run the platform:
+   ```bash
+   python main.py
+   ```
+2. Provide the SMILES input.
+3. View the predictions for molecular properties.
 
-bash
-Copy code
-git clone https://github.com/your-username/DrugForge.git
-cd DrugForge
-Create Virtual Environment (Optional):
+---
 
-bash
-Copy code
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-Install Dependencies:
+## Contributing
+We welcome contributions to enhance DrugForge. Please follow the guidelines:
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Submit a pull request with detailed explanations.
 
-bash
-Copy code
-pip install -r requirements.txt
-Run the Application:
+---
 
-bash
-Copy code
-python app.py
-
-
-### Usage
-Upload Molecular Data: Users can upload molecular structures in SMILES or PDB format.
-
-Select a Feature: Choose from various prediction features like CYP3A4 Inhibition, Solubility, or hERG Toxicity.
-
-Visualize Results: The results, such as drug-target interaction scores and toxicity predictions, are displayed in an easy-to-understand interface.
-Contributing
-
-
-We welcome contributions to DrugForge! To contribute:
-
-Fork the repository.
-
-Create a new branch (git checkout -b feature-branch).
-
-Make changes and commit them (git commit -m 'Add new feature').
-
-Push to your branch (git push origin feature-branch).
-
-Open a pull request.
-
-### License
-This project is licensed under the MIT License. See the LICENSE file for more information.
+## License
+This project is licensed under the MIT License. See the LICENSE file for more details.
