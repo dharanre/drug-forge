@@ -27,7 +27,6 @@ Traditional drug discovery is time-consuming, costly, and labor-intensive. DrugF
 2. **Processing**: The platform analyzes the input through machine learning models.
    - **Random Forest Classifier**: For categorical predictions like BBB permeability.
    - **Support Vector Machines**: For regression tasks and boundary classification.
-   - **Neural Networks**: For complex property predictions.
 3. **Output**: Predictions on molecular interactions, safety, efficacy, and pharmacokinetics.
 4. **Visualization**: Results are presented in an intuitive, user-friendly interface.
 
@@ -43,7 +42,7 @@ Traditional drug discovery is time-consuming, costly, and labor-intensive. DrugF
 
 ## Tools & Technology
 - **Languages**: Python
-- **Libraries**: Pandas, NumPy, Scikit-learn, TensorFlow, PyTorch
+- **Libraries**: Pandas, NumPy, Scikit-learn, PyTorch
 - **Database**: PostgreSQL (secure, scalable, and relational database system)
 - **Frameworks**: Flask for backend, React for frontend
 - **Intel OneAPI**: Optimized computation and AI model performance
